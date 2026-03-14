@@ -33,6 +33,7 @@ export const initDb = () => {
       image TEXT,
       type TEXT DEFAULT 'Manual',
       conditions TEXT,
+      handle TEXT UNIQUE,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -60,6 +61,7 @@ export const initDb = () => {
       featured BOOLEAN DEFAULT 0,
       visible BOOLEAN DEFAULT 1,
       status TEXT DEFAULT 'Active',
+      handle TEXT UNIQUE,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -139,7 +141,7 @@ export const initDb = () => {
     status: 'TEXT DEFAULT "Active"',
     free_shipping: 'BOOLEAN DEFAULT 0',
     track_quantity: 'BOOLEAN DEFAULT 1',
-    handle: 'TEXT UNIQUE'
+    handle: 'TEXT'
   };
 
   const productCols = (db.prepare('PRAGMA table_info(products)').all() as any[]).map((c: any) => c.name);
@@ -169,7 +171,7 @@ export const initDb = () => {
 
   // Dynamic Schema Updater for collections table
   const expectedCollectionColumns: Record<string, string> = {
-    handle: 'TEXT UNIQUE'
+    handle: 'TEXT'
   };
 
   const colCols = (db.prepare('PRAGMA table_info(collections)').all() as any[]).map((c: any) => c.name);
